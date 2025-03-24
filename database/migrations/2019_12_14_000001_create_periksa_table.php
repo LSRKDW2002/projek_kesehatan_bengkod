@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personal_access_tokens', function (Blueprint $table) {
+        Schema::create('periksa', function (Blueprint $table) {
             $table->id();
-            $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamp('expires_at')->nullable();
+            $table->foreignId('id_pasien')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_dokter')->constrained('users')->onDelete('cascade');
+            $table->dateTime('tgl_periksa');
+            $table->text('catatan')->nullable();
+            $table->integer('biaya_periksa');
             $table->timestamps();
         });
     }
